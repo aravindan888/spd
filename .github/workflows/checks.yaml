@@ -32,22 +32,34 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
-      - name: Install dependencies (with PyTorch fix)
+      - name: Create virtual environment
+        run: uv venv .venv
+
+      - name: Install dependencies (with torch)
         run: |
-          uv pip install --system torch==2.7.1 --extra-index-url https://download.pytorch.org/whl/cpu
+          source .venv/bin/activate
+          uv pip install torch==2.7.1 --extra-index-url https://download.pytorch.org/whl/cpu
           uv sync
 
       - name: Print dependencies
-        run: uv pip list
+        run: |
+          source .venv/bin/activate
+          uv pip list
 
       - name: Run basedpyright
-        run: uv run basedpyright
+        run: |
+          source .venv/bin/activate
+          uv run basedpyright
 
       - name: Run ruff lint
-        run: uv run ruff check --fix-only .
+        run: |
+          source .venv/bin/activate
+          uv run ruff check --fix-only .
 
       - name: Run ruff format
-        run: uv run ruff format .
+        run: |
+          source .venv/bin/activate
+          uv run ruff format .
 
       - name: Install MPI for tests
         uses: mpi4py/setup-mpi@v1
@@ -55,6 +67,8 @@ jobs:
           mpi: openmpi
 
       - name: Run tests
-        run: uv run python -m pytest tests/ --runslow --durations=10
+        run: |
+          source .venv/bin/activate
+          uv run python -m pytest tests/ --runslow --durations=10
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
