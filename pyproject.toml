@@ -43,6 +43,9 @@ spd-run = "spd.scripts.run:cli"
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.uv]
+required-environments = ["linux_x86_64"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["spd*"]
