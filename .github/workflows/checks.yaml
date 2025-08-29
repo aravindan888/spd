@@ -15,26 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mfisherman/openmpi:5.0.8
+      options: --user 1001:1001   # ✅ Run container as GitHub Actions user
     timeout-minutes: 15
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fix permissions
-        run: |
-          chown -R root:root $GITHUB_WORKSPACE
-          chmod -R 777 $GITHUB_WORKSPACE
-
-      - name: Install system deps
-        run: |
-          apt-get update
-          apt-get install -y python3 python3-pip python3-venv
-
       - name: Install uv
-        run: pip3 install uv==0.7.15
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.7.15"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - name: Sync dependencies
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
         run: uv sync
 
       - name: Print dependencies
@@ -55,6 +53,6 @@ jobs:
           mpi: openmpi
 
       - name: Run tests
-        run: uv run pytest tests/ --runslow --durations=10
+        run: uv run python -m pytest tests/ --runslow --durations=10
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
