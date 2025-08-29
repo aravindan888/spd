@@ -32,8 +32,10 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
-      - name: Install dependencies
-        run: uv sync
+      - name: Install dependencies (with PyTorch fix)
+        run: |
+          uv pip install torch==2.7.1 --extra-index-url https://download.pytorch.org/whl/cpu
+          uv sync
 
       - name: Print dependencies
         run: uv pip list
