@@ -16,10 +16,10 @@ jobs:
     timeout-minutes: 15
     container:
       image: mfisherman/openmpi:5.0.8
-      options: --user 1001
+      options: --user 1001:1001  # run container as GitHub Actions user to avoid permission issues
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Fix permissions
@@ -41,13 +41,13 @@ jobs:
       - name: Print dependencies
         run: uv pip list
 
-      - name: Run basedpyright
+      - name: Run type checks
         run: uv run basedpyright
 
-      - name: Run ruff lint
+      - name: Run lint checks
         run: uv run ruff check --fix-only .
 
-      - name: Run ruff format
+      - name: Format code
         run: uv run ruff format .
 
       - name: Run tests
