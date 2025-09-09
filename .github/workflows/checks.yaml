@@ -31,15 +31,15 @@ jobs:
           version: "0.7.15"
           enable-cache: true
           cache-dependency-glob: "uv.lock"
-
       - name: Create virtual environment
         run: uv venv
 
-      - name: Install CPU torch
-        run: uv pip install torch==2.7.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install CPU torch manually
+        run: uv pip install torch==2.7.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match
 
-      - name: Install dependencies
+      - name: Install other dependencies
         run: uv sync
+
 
       - name: Print dependencies
         run: uv pip list
