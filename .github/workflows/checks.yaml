@@ -35,9 +35,14 @@ jobs:
       - name: Create virtual environment
         run: uv venv
 
-      - name: Install CPU torch manually
+      - name: Install pip
+        run: uv tool install pip
+
+      - name: Install CPU torch manually (pip)
         run: |
-          uv pip install https://download.pytorch.org/whl/cpu/torch-2.7.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl
+          pip install torch==2.7.1+cpu \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+
 
 
 
