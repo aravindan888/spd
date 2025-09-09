@@ -53,7 +53,7 @@ line-length = 100
 fix = true
 
 [tool.uv]
-required-environments = ["linux-x86_64"]
+required-environments = ["sys_platform == 'linux'"]
 
 [tool.ruff.lint]
 ignore = [
