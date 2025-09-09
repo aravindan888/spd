@@ -38,10 +38,9 @@ jobs:
       - name: Install pip
         run: uv tool install pip
 
-      - name: Install CPU torch manually (pip)
-        run: |
-          pip install torch==2.6.0+cpu \
-            --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install dependencies
+        run: uv sync --extra-index-url https://download.pytorch.org/whl/cpu
+
 
 
 
