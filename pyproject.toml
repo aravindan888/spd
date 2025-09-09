@@ -52,6 +52,9 @@ include = ["spd*"]
 line-length = 100
 fix = true
 
+[tool.uv]
+required-environments = ["linux-x86_64"]
+
 [tool.ruff.lint]
 ignore = [
     "F722", # Incompatible with jaxtyping
