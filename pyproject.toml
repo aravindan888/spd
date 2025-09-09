@@ -8,6 +8,8 @@ license = { text = "MIT" }
 readme = "README.md"
 dependencies = [
     "torch==2.6.0+cpu",
+    "numpy",
+    "matplotlib",
     "torchvision",
     "pydantic",
     "wandb>=0.20.1", # Avoid wandb.sdk.wandb_manager.ManagerConnectionRefusedError
