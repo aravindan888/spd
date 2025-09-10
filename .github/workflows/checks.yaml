@@ -38,13 +38,16 @@ jobs:
       - name: Install pip
         run: uv tool install pip
 
-      - name: Sync project dependencies
-        run: uv sync --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install CPU PyTorch
+        run: uv pip install torch==2.7.1+cpu torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 
-      - name: Print installed dependencies
+      - name: Install remaining dependencies
+        run: uv sync --index-strategy unsafe-best-match
+
+      - name: Print dependencies
         run: uv pip list
 
-      - name: Run static type checks
+      - name: Run basedpyright
         run: uv run basedpyright
 
       - name: Run ruff lint
