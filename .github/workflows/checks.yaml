@@ -13,10 +13,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     container:
       image: mfisherman/openmpi:5.0.8
-      options: --user 1001:1001   # run as GitHub Actions user to avoid permissions issues
+      options: --user 1001:1001   # run as non-root to avoid permissions issues
 
     steps:
       - name: Checkout
@@ -39,7 +39,7 @@ jobs:
         run: uv tool install pip
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Print dependencies
         run: uv pip list
