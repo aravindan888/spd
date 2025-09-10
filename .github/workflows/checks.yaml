@@ -38,8 +38,11 @@ jobs:
       - name: Install pip
         run: uv tool install pip
 
-      - name: Install dependencies
-        run: uv sync --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install CPU PyTorch
+        run: uv pip install torch==2.7.1+cpu torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install other dependencies
+        run: uv sync
+
 
       - name: Print dependencies
         run: uv pip list
