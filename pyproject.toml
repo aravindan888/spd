@@ -43,6 +43,9 @@ dev = [
 [project.scripts]
 spd-run = "spd.scripts.run:cli"
 
+[tool.uv]
+required-environments = ["platform_system == 'Linux' and platform_machine == 'x86_64'"]
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -54,10 +57,6 @@ include = ["spd*"]
 [tool.ruff]
 line-length = 100
 fix = true
-
-#[tool.uv]
-#required-environments = ["platform_system == 'Linux' and platform_machine == 'x86_64'"]
-
 
 [tool.ruff.lint]
 ignore = [
